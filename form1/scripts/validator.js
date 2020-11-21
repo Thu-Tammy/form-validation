@@ -1,8 +1,18 @@
 function Validator(options) {
 
+    var selectorRules = {};
+
     function validate(inputElement, rule) {
     var errorElement = inputElement.parentElement.querySelector(options.errorSelector)
-    var errorMess = rule.test(inputElement.value);
+    var errorMess;
+
+    var rules = selectorRules[rule.selector]
+    
+    for (let i = 0; i < rules.length; i++) {
+        errorMess = rules[i](inputElement.value);
+        if (errorMess) break;
+    }
+
     if (errorMess) {
         errorElement.innerText = errorMess;
         inputElement.parentElement.classList.add('invalid');
@@ -18,6 +28,12 @@ function Validator(options) {
     if (formElement) {
         options.rules.forEach(function(rule){
 
+            if (Array.isArray(selectorRules[rule.selector])) {
+                selectorRules[rule.selector].push[rule.test]
+            } else {
+            selectorRules[rule.selector] = [rule.test];
+            }
+        
            
             var inputElement = formElement.querySelector(rule.selector);
             
@@ -34,6 +50,7 @@ function Validator(options) {
                 }
             }
         })
+        
     }
 }
 
@@ -41,17 +58,17 @@ Validator.isRequired = function(selector, message) {
   return {
       selector: selector,
       test: function(value) {
-            return value.trim() ? undefined : message ||"Please enter your name"
+            return value.trim() ? undefined : message ||"Please enter here"
       }
   };
 }
 
-Validator.isEmail = function(selector, message) {
+Validator.isEmail = function(selector) {
   return {
       selector: selector,
       test: function(value) {
           var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-          return regex.test(value) ? undefined : message || "Please enter your email";
+          return regex.test(value) ? undefined : "Please enter your email";
       }
   }
 }

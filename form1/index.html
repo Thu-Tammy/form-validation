@@ -11,7 +11,7 @@
 
         <form action="" method="POST" class="form" id="form-1">
           <h3 class="heading">Register</h3>
-          <p class="desc">Let's lern together ❤️</p>
+          <p class="desc">Let's learn together ❤️</p>
       
           <div class="spacer"></div>
 
@@ -29,13 +29,13 @@
       
           <div class="form-group">
             <label for="password" class="form-label">Password</label>
-            <input id="password" name="password" type="password" placeholder="Nhập mật khẩu" class="form-control">
+            <input id="password" name="password" type="password" placeholder="Choose your password" class="form-control">
             <span class="form-message"></span>
           </div>
       
           <div class="form-group">
             <label for="password_confirmation" class="form-label">Retype Password</label>
-            <input id="password_confirmation" name="password_confirmation" placeholder="Nhập lại mật khẩu" type="password" class="form-control">
+            <input id="password_confirmation" name="password_confirmation" placeholder="Retype your password" type="password" class="form-control">
             <span class="form-message"></span>
           </div>
       
@@ -51,8 +51,10 @@
             errorSelector: '.form-message',
             rules: [
                 Validator.isRequired('#fullname', 'Please enter your full name'),
-                Validator.isEmail('#email', 'Please enter your email'),
-                Validator.minLength('#password', 6, 'Please choose your password'),
+                Validator.isRequired('#email'),
+                Validator.isEmail('#email'),
+                Validator.minLength('#password', 6),
+                Validator.isRequired('#password_confirmation'),
                 Validator.isConfirmed('password_confirmation', function() {
                     return document.querySelector('#form-1 #password').value;
                 }, "Incorrect Password"),
