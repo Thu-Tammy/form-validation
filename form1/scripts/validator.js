@@ -37,39 +37,39 @@ function Validator(options) {
     }
 }
 
-Validator.isRequired = function(selector) {
+Validator.isRequired = function(selector, message) {
   return {
       selector: selector,
       test: function(value) {
-            return value.trim() ? undefined : "Vui lòng nhập trường này"
+            return value.trim() ? undefined : message ||"Please enter your name"
       }
   };
 }
 
-Validator.isEmail = function(selector) {
+Validator.isEmail = function(selector, message) {
   return {
       selector: selector,
       test: function(value) {
           var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-          return regex.test(value) ? undefined : "Vui lòng nhập email";
+          return regex.test(value) ? undefined : message || "Please enter your email";
       }
   }
 }
 
-Validator.minLength = function(selector, min) {
+Validator.minLength = function(selector, min, message) {
     return {
         selector: selector,
         test: function(value) {
-              return value.length >= min ? undefined : `Vui lòng nhập ít nhất ${min} kí tự`
+              return value.length >= min ? undefined : message || `Password must be at least ${min} characters`
         }
     };
   }
 
-  Validator.isConfirmed = function(selector, getConfirmValue) {
+  Validator.isConfirmed = function(selector, getConfirmValue, message) {
     return {
         selector: selector,
         test: function(value) {
-              return value === getConfirmValue() ? undefined : "Giá trị nhập vào không chính xác"
+              return value === getConfirmValue() ? undefined : message || "Incorrect value"
         }
     };
   }
